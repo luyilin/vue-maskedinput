@@ -97,6 +97,12 @@ export default {
     }
   },
 
+  watch: {
+    pattern() {
+      this.init()
+    }
+  },
+
   mounted() {
     this.init()
   },
