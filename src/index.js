@@ -109,7 +109,6 @@ export default {
 
   methods: {
     init() {
-      console.log(this.placeholder)
       var options = {
         pattern: this.pattern,
         value: this.value,
@@ -120,11 +119,18 @@ export default {
       }
       this.mask = new InputMask(options)
       this.$refs.input.placeholder = this.placeholder ? this.placeholder : this.mask.emptyValue
+
+      if (![...this.$refs.input.value].length) return
+      [...this.$refs.input.value].map((i) => {
+        if(this.mask.input(i)) {
+          this.$refs.input.value = this.mask.getValue()
+          setTimeout(this._updateInputSelection, 0)
+        }
+      })
     },
 
     _change(e) {
       var maskValue = this.mask.getValue()
-      console.log(maskValue, this.$refs.input.value)
       if (this.$refs.input.value !== maskValue) {
         // Cut or delete operations will have shortened the value
         if (this.$refs.input.value.length < maskValue.length) {

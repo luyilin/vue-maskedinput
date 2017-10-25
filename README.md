@@ -32,7 +32,7 @@ export default {
 
 ## Props
 
-### mask : string
+### `mask` : `string`
 The masking pattern to be applied to the `<input>`.
 
 ### `formatCharacters`: `Object`
