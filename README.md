@@ -1,5 +1,8 @@
 # vue-maskedinput
 
+[![npm](https://img.shields.io/npm/v/vue-maskedinput.svg)](https://www.npmjs.com/package/vue-maskedinput)
+[![npm](https://img.shields.io/npm/dm/vue-maskedinput.svg)](https://www.npmjs.com/package/vue-maskedinput)
+
 A [Vue](https://vuefe.cn/) component for `<input>` masking, built on top of [inputmask-core](https://github.com/insin/inputmask-core).
 
 ### [Demo](https://luyilin.github.io/vue-maskedinput/example/dist/index)
@@ -47,7 +50,7 @@ A default `placeholder` will be generated from the mask's pattern, but you can p
 ### `value` : `string`
 A default value for the mask.
 
-### `hideUnderline` : 'Boolean'
+### `hideUnderline` : `Boolean`
 A boolean to hide placeholder's underline
 
 See the [inputmask-core docs](https://github.com/insin/inputmask-core#placeholderchar--string) for details.
