@@ -2,6 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/vue-maskedinput.svg)](https://www.npmjs.com/package/vue-maskedinput)
 [![npm](https://img.shields.io/npm/dm/vue-maskedinput.svg)](https://www.npmjs.com/package/vue-maskedinput)
+[![CircleCI](https://img.shields.io/circleci/project/github/luyilin/vue-maskedinput.svg)](https://circleci.com/gh/luyilin/vue-maskedinput/tree/master)
 
 A [Vue](https://vuefe.cn/) component for `<input>` masking, built on top of [inputmask-core](https://github.com/insin/inputmask-core).
 
