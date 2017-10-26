@@ -1,8 +1,8 @@
 # vue-maskedinput
 
-Masked input Vue component
+A [Vue](https://vuefe.cn/) component for `<input>` masking, built on top of [inputmask-core](https://github.com/insin/inputmask-core).
 
-[Demo](https://luyilin.github.io/vue-maskedinput/example/dist/index)
+### [Demo](https://luyilin.github.io/vue-maskedinput/example/dist/index)
 
 ## Install
 
@@ -43,6 +43,12 @@ Customised placeholder character used to fill in editable parts of the pattern.
 
 ### `placeholder` : `string`
 A default `placeholder` will be generated from the mask's pattern, but you can pass a `placeholder` prop to provide your own.
+
+### `value` : `string`
+A default value for the mask.
+
+### `hideUnderline` : 'Boolean'
+A boolean to hide placeholder's underline
 
 See the [inputmask-core docs](https://github.com/insin/inputmask-core#placeholderchar--string) for details.
 

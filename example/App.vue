@@ -7,31 +7,57 @@
       <ul>
         <li>
           <label>Card Number: </label>
-          <masked-input pattern="1111 1111 1111 1111"></masked-input>
+          <masked-input pattern="1111 1111 1111 1111" v-model="cardNumber"></masked-input>
+          <span>{{ cardNumber }}</span>
+        </li>
+        <li>
+          <label>DateTime: </label>
+          <masked-input pattern="1111/11/11 11:11:11" placeholder="yyyy/mm/dd hh:mm:ss" v-model="dateTime"></masked-input>
+          <span>{{ dateTime }}</span>
         </li>
         <li>
           <label>Date: </label>
-          <masked-input pattern="1111/11/11" placeholder="yyyy/mm/dd"></masked-input>
+          <masked-input pattern="1111/11/11" placeholder="yyyy/mm/dd" v-model="date"></masked-input>
+          <span>{{ date }}</span>
+        </li>
+        <li>
+          <label>Time: </label>
+          <masked-input pattern="11:11:11" placeholder="hh:mm:ss" v-model="time"></masked-input>
+          <span>{{ time }}</span>
         </li>
         <li>
           <label>Phone: </label>
-          <masked-input pattern="111 1111 1111"></masked-input>
+          <masked-input pattern="111 1111 1111" v-model="phone"></masked-input>
+          <span>{{ phone }}</span>
         </li>
         <li>
           <label>License Plate: </label>
-          <masked-input pattern="A 11111" placeholder="A 11111"></masked-input>
+          <masked-input pattern="A 11111" placeholder="A 11111" v-model="plate"></masked-input>
+          <span>{{ plate }}</span>
         </li>
         <li>
           <label>Escaped: </label>
-          <masked-input pattern="11 \* 11"></masked-input>
+          <masked-input pattern="11 \* 11" v-model="escaped"></masked-input>
         </li>
         <li>
           <label>Leading: </label>
-          <masked-input pattern="(1) 111 1111"></masked-input>
+          <masked-input pattern="(1) 111 1111" v-model="leading"></masked-input>
+          <span>{{ leading }}</span>
+        </li>
+        <li>
+          <label>Hyphen: </label>
+          <masked-input pattern="11\-11" v-model="hyphen"></masked-input>
+          <span>{{ hyphen }}</span>
+        </li>
+        <li>
+          <label>Decimal: </label>
+          <masked-input pattern="1\.111111111" placeholder="3.141592651" v-model="pai"></masked-input>
+          <span>{{ pai }}</span>
         </li>
         <li>
           <label>Mix: </label>
-          <masked-input pattern="11-WW-1111" placeholder="11-WW-1111"></masked-input>
+          <masked-input pattern="ww-WW-11" placeholder="ww-WW-11" v-model="mix"></masked-input>
+          <span>{{ mix }}</span>
         </li>
         <li>
           <select v-model="pattern">
@@ -40,7 +66,18 @@
             <option>111 111</option>
             <option>11 11</option>
           </select>
-          <masked-input :pattern="pattern"></masked-input>
+          <masked-input :pattern="pattern" v-model="rePattern"></masked-input>
+          <span>{{ rePattern }}</span>
+        </li>
+        <li>
+          <label>Raw Value: </label>
+          <masked-input pattern="\$111" @input="rawVal = arguments[1]"></masked-input>
+          <span>{{ rawVal }}</span>
+        </li>
+        <li>
+          <label>HideUnderline: </label>
+          <masked-input pattern="11 11" :hideUnderline="true" v-model="hide"></masked-input>
+          <span>{{ hide }}</span>
         </li>
       </ul>
     </div>
@@ -57,7 +94,21 @@ export default {
 
   data() {
     return {
-      pattern: '1111 1111'
+      pattern: '1111 1111',
+      cardNumber: '',
+      dateTime: '',
+      date: '',
+      time: '20:00:00',
+      phone: '',
+      plate: '',
+      escaped: '',
+      leading: '',
+      hyphen: '',
+      pai: '',
+      mix: '',
+      rePattern: '',
+      rawVal: '',
+      hide: ''
     }
   }
 }
@@ -68,9 +119,6 @@ export default {
   body, html {
     margin: 0;
     padding: 0;
-  }
-  body, html, #app {
-    height: 100%;
   }
   #app {
     background-color: #fcf7f3;
@@ -103,6 +151,10 @@ export default {
   label {
     margin-right: 20px;
     vertical-align: -webkit-baseline-middle;
+  }
+  span {
+    color: #999;
+    margin-left: 15px;
   }
   .github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}
 </style>

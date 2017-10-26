@@ -61,6 +61,9 @@ export default {
   render(h) {
     return h('input', {
       ref: 'input',
+      domProps: {
+        value: this.value
+      },
       on: {
         change: this._change,
         keydown: this._keydown,
@@ -82,6 +85,9 @@ export default {
       type: Object,
       default: () => {
         return {
+          'w': {
+            validate(char) { return /\w/.test(char) },
+          },
           'W': {
             validate(char) { return /\w/.test(char) },
             transform(char) { return char.toUpperCase() }
@@ -94,13 +100,19 @@ export default {
     },
     placeholderChar: {
       type: String
+    },
+    hideUnderline: {
+      type: Boolean
     }
   },
 
   watch: {
     pattern() {
       this.init()
-    }
+    },
+    value(newValue) {
+      if (this.mask) this.mask.setValue(newValue)
+    },
   },
 
   mounted() {
@@ -118,15 +130,18 @@ export default {
         options.placeholderChar = this.props.placeholderChar
       }
       this.mask = new InputMask(options)
-      this.$refs.input.placeholder = this.placeholder ? this.placeholder : this.mask.emptyValue
+      this.$refs.input.placeholder = this.placeholder ? this.placeholder : this.hideUnderline ? '' : this.mask.emptyValue
 
-      if (![...this.$refs.input.value].length) return
-      [...this.$refs.input.value].map((i) => {
-        if(this.mask.input(i)) {
-          this.$refs.input.value = this.mask.getValue()
-          setTimeout(this._updateInputSelection, 0)
-        }
-      })
+      if (this.$refs.input.value === '') {
+        this.$emit('input', '', '')
+      } else {
+        [...this.$refs.input.value].map((i) => {
+          if(this.mask.input(i)) {
+            this.$refs.input.value = this.mask.getValue()
+            setTimeout(this._updateInputSelection, 0)
+          }
+        })
+      }
     },
 
     _change(e) {
@@ -139,14 +154,7 @@ export default {
           this.mask.selection.end = this.mask.selection.start + sizeDiff
           this.mask.backspace()
         }
-        var value = this._getDisplayValue()
-        this.$refs.input.value = value
-        if (value) {
-          this._updateInputSelection()
-        }
-      }
-      if (this.change) {
-        this.change(e)
+        this._updateValue(e)
       }
     },
 
@@ -154,22 +162,14 @@ export default {
       if (isUndo(e)) {
         e.preventDefault()
         if (this.mask.undo()) {
-          this.$refs.input.value = this._getDisplayValue()
-          this._updateInputSelection()
-          if (this.change) {
-            this.change(e)
-          }
+          this._updateValue(e)
         }
         return
       }
       else if (isRedo(e)) {
         e.preventDefault()
         if (this.mask.redo()) {
-          this.$refs.input.value = this._getDisplayValue()
-          this._updateInputSelection()
-          if (this.change) {
-            this.change(e)
-          }
+          this._updateValue(e)
         }
         return
       }
@@ -178,14 +178,10 @@ export default {
         e.preventDefault()
         this._updateMaskSelection()
         if (this.mask.backspace()) {
-          var value = this._getDisplayValue()
-          this.$refs.input.value = value
-          if (value) {
-            this._updateInputSelection()
-          }
-          if (this.change) {
-            this.change(e)
-          }
+          this._updateValue(e)
+        }
+        if (this.$refs.input.value === '') {
+          this.$emit('input', '', '')
         }
       }
     },
@@ -195,11 +191,7 @@ export default {
       e.preventDefault()
       this._updateMaskSelection()
       if (this.mask.input((e.key || e.data))) {
-        this.$refs.input.value = this.mask.getValue()
-        this._updateInputSelection()
-        if (this.change) {
-          this.change(e)
-        }
+        this._updateValue(e)
       }
     },
 
@@ -207,11 +199,7 @@ export default {
       e.preventDefault()
       this._updateMaskSelection()
       if (this.mask.paste(e.clipboardData.getData('Text'))) {
-        this.$refs.input.value = this.mask.getValue()
-        setTimeout(this._updateInputSelection, 0)
-        if (this.change) {
-          this.change(e)
-        }
+        this._updateValue(e)
       }
     },
 
@@ -226,6 +214,15 @@ export default {
     _getDisplayValue() {
       var value = this.mask.getValue()
       return value === this.mask.emptyValue ? '' : value
+    },
+
+    _updateValue(e) {
+      this.$refs.input.value = this._getDisplayValue()
+      this.$emit('input', this.$refs.input.value, this.mask.getRawValue())
+      this._updateInputSelection()
+      if (this.change) {
+        this.change(e)
+      }
     }
   }
 }
