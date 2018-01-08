@@ -34,10 +34,10 @@
     ]
   },
   "devDependencies": {
-    "bili": "^0.18.2",
-    "poi": "^9.3.10",
-    "test-vue-app": "^1.0.0",
-    "vue-test-utils": "^1.0.0-beta.2"
+    "bili": "0.18.2",
+    "poi": "9.6.10",
+    "test-vue-app": "1.0.0",
+    "vue-test-utils": "1.0.0-beta.9"
   },
   "dependencies": {
     "inputmask-core": "^2.2.0"
